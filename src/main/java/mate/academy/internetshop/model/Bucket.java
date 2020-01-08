@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Bucket {
 
-    private static Long idProducer = Long.valueOf(0);
+    private static Long idProducer = 0L;
     private List<Item> items;
     private Long orderId;
     private Long id;

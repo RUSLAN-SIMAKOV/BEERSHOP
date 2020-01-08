@@ -25,7 +25,7 @@ public class BucketServiceImpl implements BucketService {
 
     @Override
     public Bucket get(Long id) {
-        return bucketDao.get(id);
+        return bucketDao.get(id).get();
     }
 
     @Override
@@ -45,8 +45,8 @@ public class BucketServiceImpl implements BucketService {
 
     @Override
     public Bucket addItem(Long bucketId, Long itemId) {
-        Bucket bucket = bucketDao.get(bucketId);
-        Item item = itemDao.get(itemId);
+        Bucket bucket = bucketDao.get(bucketId).get();
+        Item item = itemDao.get(itemId).get();
         bucket.getItems().add(item);
         return bucketDao.update(bucket);
     }
@@ -63,6 +63,6 @@ public class BucketServiceImpl implements BucketService {
 
     @Override
     public List<Item> getAllItems(Bucket bucket) {
-        return bucketDao.get(bucket.getId()).getItems();
+        return bucket.getItems();
     }
 }

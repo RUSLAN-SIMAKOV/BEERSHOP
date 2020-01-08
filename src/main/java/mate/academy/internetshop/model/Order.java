@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Order {
 
-    private static Long idProducer = Long.valueOf(0);
+    private static Long idProducer = 0L;
     private List<Item> items;
     private User user;
     private Long id;
