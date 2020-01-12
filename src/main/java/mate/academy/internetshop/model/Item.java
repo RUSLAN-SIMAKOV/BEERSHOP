@@ -6,9 +6,7 @@ public class Item {
     private Integer price;
     private Long id;
 
-    public Item(String name, Integer price) {
-        this.name = name;
-        this.price = price;
+    public Item() {
         setId(++idProducer);
     }
 
@@ -34,5 +32,11 @@ public class Item {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" + "name='" + name + '\''
+                + ", price=" + price + ", id=" + id + '}';
     }
 }

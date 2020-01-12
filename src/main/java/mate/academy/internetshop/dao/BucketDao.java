@@ -9,6 +9,8 @@ public interface BucketDao {
 
     Optional<Bucket> get(Long bucketId);
 
+    Bucket getByUser(Long userId);
+
     Bucket update(Bucket bucket);
 
     void delete(Long id);

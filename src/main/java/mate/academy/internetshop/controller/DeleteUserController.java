@@ -5,11 +5,21 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import mate.academy.internetshop.lib.Inject;
+import mate.academy.internetshop.service.UserService;
 
-public class IndexController extends HttpServlet {
+public class DeleteUserController extends HttpServlet {
+
+    @Inject
+    private static UserService userService;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
+
+        String userId = req.getParameter("user_id");
+        userService.delete(Long.parseLong(userId));
+
+        resp.sendRedirect(req.getContextPath() + "/servlet/getAllUsers");
     }
 }

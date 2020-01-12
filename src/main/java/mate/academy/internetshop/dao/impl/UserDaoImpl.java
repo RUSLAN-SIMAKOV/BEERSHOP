@@ -36,8 +36,11 @@ public class UserDaoImpl implements UserDao {
 
         Storage.users.remove(Storage.users
                 .stream()
-                .filter(i -> i.getId().equals(id))
-                .findFirst());
+                .peek(u -> System.out.println(u))
+                .filter(u -> u.getId().equals(id))
+                .peek(u -> System.out.println(u))
+                .findFirst()
+                .get());
     }
 
     @Override

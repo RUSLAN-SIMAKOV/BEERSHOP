@@ -6,13 +6,39 @@ public class User {
 
     private static Long idProducer = 0L;
     private String name;
+    private String surname;
     private Bucket bucket;
     private List<Order> orderList;
     private Long id;
+    private String login;
+    private String password;
 
-    public User(String name) {
-        this.name = name;
+    public User() {
         setId(++idProducer);
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Long getId() {
