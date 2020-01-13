@@ -7,16 +7,19 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 public class Injector {
+
     private static final String PROJECT_MAIN_PACKAGE = "mate.academy.internetshop";
+    final static Logger logger = Logger.getLogger(Injector.class);
     private static List<Class> classes = new ArrayList<>();
 
     static {
         try {
             classes.addAll(getClasses(PROJECT_MAIN_PACKAGE));
         } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
+            logger.error("System failure!", e);;
         }
     }
 
