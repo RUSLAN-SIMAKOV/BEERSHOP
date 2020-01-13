@@ -1,7 +1,8 @@
 package mate.academy.internetshop.service.impl;
 
-import java.util.Optional;
+import java.util.List;
 import mate.academy.internetshop.dao.UserDao;
+import mate.academy.internetshop.db.Storage;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.lib.Service;
 import mate.academy.internetshop.model.User;
@@ -16,6 +17,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User create(User user) {
         return userDao.create(user);
+    }
+
+    @Override
+    public List<User> getAll() {
+        return Storage.users;
     }
 
     @Override

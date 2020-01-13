@@ -1,11 +1,13 @@
 package mate.academy.internetshop.service;
 
-import java.util.Optional;
+import java.util.List;
 import mate.academy.internetshop.model.User;
 
 public interface UserService {
 
     User create(User user);
+
+    List<User> getAll();
 
     User get(Long id);
 
@@ -14,4 +16,5 @@ public interface UserService {
     void delete(Long id);
 
     void delete(User user);
+
 }

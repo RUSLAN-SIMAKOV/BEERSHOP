@@ -7,7 +7,7 @@ public class Bucket {
 
     private static Long idProducer = 0L;
     private List<Item> items;
-    private Long orderId;
+    private Long userId;
     private Long id;
 
     public Bucket() {
@@ -23,12 +23,12 @@ public class Bucket {
         this.items = items;
     }
 
-    public Long getOrderId() {
-        return orderId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Long getId() {

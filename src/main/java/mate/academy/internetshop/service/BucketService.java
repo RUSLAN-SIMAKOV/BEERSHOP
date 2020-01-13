@@ -10,6 +10,8 @@ public interface BucketService {
 
     Bucket get(Long id);
 
+    Bucket getByUser(Long userId);
+
     Bucket update(Bucket bucket);
 
     void delete(Long id);
