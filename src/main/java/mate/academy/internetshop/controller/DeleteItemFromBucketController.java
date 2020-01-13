@@ -21,7 +21,7 @@ public class DeleteItemFromBucketController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        Bucket bucket;
+
         String itemId = req.getParameter("item_id");
         String bucketId = req.getParameter("bucket_id");
         bucketService.deleteItem(bucketService.get(Long.valueOf(bucketId)),

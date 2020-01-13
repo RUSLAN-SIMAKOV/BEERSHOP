@@ -9,11 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Bucket;
 import mate.academy.internetshop.model.Item;
-import mate.academy.internetshop.model.Order;
 import mate.academy.internetshop.service.BucketService;
-import mate.academy.internetshop.service.OrderService;
+import mate.academy.internetshop.service.ItemService;
 
-public class ShowOrderController extends HttpServlet {
+public class AddItemToBucketController extends HttpServlet {
 
     private static final Long USER_ID = 1L;
 
@@ -21,22 +20,22 @@ public class ShowOrderController extends HttpServlet {
     private static BucketService bucketService;
 
     @Inject
-    private static OrderService orderService;
+    private static ItemService itemService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        Order order = new Order();
+        String itemId = req.getParameter("item_id");
 
         Bucket bucket = bucketService.getByUser(USER_ID);
-
-        orderService.create(order);
+        bucketService.addItem(bucket.getId(), Long.valueOf(itemId));
 
         List<Item> items = bucketService.getAllItems(bucket);
 
         req.setAttribute("items", items);
+        req.setAttribute("bucket", bucket);
 
-        req.getRequestDispatcher("/WEB-INF/views/order.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/bucket.jsp").forward(req, resp);
     }
 }

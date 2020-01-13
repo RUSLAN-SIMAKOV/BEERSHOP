@@ -83,10 +83,10 @@
         <url-pattern>/servlet/purchase</url-pattern>
     </servlet-mapping>
 
-    <!--servlet bucket-->
+    <!--servlet add item to bucket -->
     <servlet>
         <servlet-name>bucket</servlet-name>
-        <servlet-class>mate.academy.internetshop.controller.BucketController</servlet-class>
+        <servlet-class>mate.academy.internetshop.controller.AddItemToBucketController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>bucket</servlet-name>
@@ -116,7 +116,7 @@
     <!--servlet show Order-->
     <servlet>
         <servlet-name>showOrder</servlet-name>
-        <servlet-class>mate.academy.internetshop.controller.ShowOrderController</servlet-class>
+        <servlet-class>mate.academy.internetshop.controller.ShowItemsInOrderController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>showOrder</servlet-name>
