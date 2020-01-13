@@ -10,7 +10,7 @@ import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.service.ItemService;
 
-public class PurchaseController extends HttpServlet {
+public class GetAllItemsManageController extends HttpServlet {
 
     @Inject
     private static ItemService itemService;
@@ -23,6 +23,6 @@ public class PurchaseController extends HttpServlet {
 
         req.setAttribute("items", items);
 
-        req.getRequestDispatcher("/WEB-INF/views/purchasing.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/getAllItems.jsp").forward(req, resp);
     }
 }

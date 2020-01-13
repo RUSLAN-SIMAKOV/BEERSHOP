@@ -23,6 +23,6 @@ public class GetAllItemsController extends HttpServlet {
 
         req.setAttribute("items", items);
 
-        req.getRequestDispatcher("/WEB-INF/views/getAllItems.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/purchasing.jsp").forward(req, resp);
     }
 }
