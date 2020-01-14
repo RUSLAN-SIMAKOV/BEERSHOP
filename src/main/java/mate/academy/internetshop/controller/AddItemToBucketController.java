@@ -14,8 +14,6 @@ import mate.academy.internetshop.service.ItemService;
 
 public class AddItemToBucketController extends HttpServlet {
 
-    private static final Long USER_ID = 1L;
-
     @Inject
     private static BucketService bucketService;
 
@@ -28,7 +26,8 @@ public class AddItemToBucketController extends HttpServlet {
 
         String itemId = req.getParameter("item_id");
 
-        Bucket bucket = bucketService.getByUser(USER_ID);
+        Long userId = (Long) req.getSession(true).getAttribute("userId");
+        Bucket bucket = bucketService.getByUser(userId);
         bucketService.addItem(bucket.getId(), Long.valueOf(itemId));
 
         List<Item> items = bucketService.getAllItems(bucket);

@@ -6,6 +6,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import mate.academy.internetshop.exception.AuthenticationException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.User;
@@ -29,6 +30,10 @@ public class LoginController extends HttpServlet {
         try {
             User user = userService.login(req.getParameter("user_login"),
                     req.getParameter("user_password"));
+
+            HttpSession session = req.getSession(true);
+            session.setAttribute("userId", user.getId());
+
             Cookie cookie = new Cookie("BEERSHOP", user.getToken());
             resp.addCookie(cookie);
             req.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
