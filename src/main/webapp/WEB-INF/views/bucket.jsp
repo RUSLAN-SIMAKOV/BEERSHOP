@@ -1,7 +1,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <jsp:useBean id="items" scope="request" type="java.util.List<mate.academy.internetshop.model.Item>"/>
-<jsp:useBean id="bucket" scope="request" type="mate.academy.internetshop.model.Bucket"/>
 
 <%--
   Created by IntelliJ IDEA.
@@ -38,7 +37,7 @@
                 <c:out value="${item.price}" />
             </td>
             <td>
-                <a href="/internetshop2_war_exploded/servlet/deleteItemFromBucket?item_id=${item.id}&bucket_id=${bucket.id}">DELETE</a>
+                <a href="/internetshop2_war_exploded/servlet/deleteItemFromBucket?item_id=${item.id}">DELETE</a>
             </td>
         </tr>
     </c:forEach>
