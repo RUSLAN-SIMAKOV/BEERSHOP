@@ -54,6 +54,9 @@
     <form action="${pageContext.request.contextPath}/servlet/registration">
         <button>REGISTRATION NEW USER</button>
     </form>
+    <form action="${pageContext.request.contextPath}/login">
+        <button>LOGIN</button>
+    </form>
     <form action="${pageContext.request.contextPath}/servlet/purchase">
         <button>START PURCHASING</button>
     </form>
