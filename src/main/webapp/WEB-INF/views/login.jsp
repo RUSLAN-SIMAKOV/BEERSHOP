@@ -22,7 +22,7 @@
         <button type="submit" class="registerbtn">Login</button>
     </div>
 </form>
-<form action="${pageContext.request.contextPath}/servlet/index">
+<form action="${pageContext.request.contextPath}/index">
     <button>BACK HOME</button>
 </form>
 </body>

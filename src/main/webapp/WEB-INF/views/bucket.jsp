@@ -47,7 +47,7 @@
 <form action="${pageContext.request.contextPath}/servlet/showOrder">
     <button>MAKE ORDER</button>
 </form>
-<form action="${pageContext.request.contextPath}/servlet/index">
+<form action="${pageContext.request.contextPath}/index">
     <button>BACK HOME</button>
 </form>
 </body>

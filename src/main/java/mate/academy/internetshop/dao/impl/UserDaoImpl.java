@@ -57,7 +57,9 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User login(String login, String password) throws AuthenticationException {
-        Optional<User> user = Storage.users.stream().filter(u -> u.getLogin().equals(login)).findFirst();
+        Optional<User> user = Storage.users.stream()
+                .filter(u -> u.getLogin().equals(login))
+                .findFirst();
 
         if (user.isEmpty() || !user.get().getPassword().equals(password)) {
             throw new AuthenticationException("Try again");
