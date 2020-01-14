@@ -36,6 +36,6 @@ public class AddItemToBucketController extends HttpServlet {
         req.setAttribute("items", items);
         req.setAttribute("bucket", bucket);
 
-        req.getRequestDispatcher("/WEB-INF/views/purchasing.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/bucket.jsp").forward(req, resp);
     }
 }
