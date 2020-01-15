@@ -51,8 +51,11 @@
 <p>
 </p>
 <div class="container"></div>
-    <form action="${pageContext.request.contextPath}/servlet/registration">
+    <form action="${pageContext.request.contextPath}/registration">
         <button>REGISTRATION NEW USER</button>
+    </form>
+    <form action="${pageContext.request.contextPath}/login">
+        <button>LOGIN</button>
     </form>
     <form action="${pageContext.request.contextPath}/servlet/purchase">
         <button>START PURCHASING</button>

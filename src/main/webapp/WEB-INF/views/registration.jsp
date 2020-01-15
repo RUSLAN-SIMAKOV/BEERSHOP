@@ -8,10 +8,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>BEER SHOP * REGISTRATION</title>
+    <title>BEER SHOP</title>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/servlet/registration" method="post">
+<form action="${pageContext.request.contextPath}/registration" method="post">
     <div class="container">
         <h1>Register</h1>
         <p>Please fill in this form to create an account.</p>
@@ -36,7 +36,7 @@
         <button type="submit" class="registerbtn">Register</button>
     </div>
 </form>
-<form action="${pageContext.request.contextPath}/servlet/index">
+<form action="${pageContext.request.contextPath}/index">
     <button>BACK HOME</button>
 </form>
 </body>

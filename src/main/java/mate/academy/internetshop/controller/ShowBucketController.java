@@ -13,8 +13,6 @@ import mate.academy.internetshop.service.BucketService;
 
 public class ShowBucketController extends HttpServlet {
 
-    private static final Long USER_ID = 1L;
-
     @Inject
     private static BucketService bucketService;
 
@@ -22,12 +20,11 @@ public class ShowBucketController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        Bucket bucket = bucketService.getByUser(USER_ID);
-
+        Long userId = (Long) req.getSession(true).getAttribute("userId");
+        Bucket bucket = bucketService.getByUser(userId);
         List<Item> items = bucketService.getAllItems(bucket);
 
         req.setAttribute("items", items);
-        req.setAttribute("bucket", bucket);
 
         req.getRequestDispatcher("/WEB-INF/views/bucket.jsp").forward(req, resp);
     }

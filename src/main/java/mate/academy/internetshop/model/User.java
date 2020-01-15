@@ -12,9 +12,18 @@ public class User {
     private Long id;
     private String login;
     private String password;
+    private String token;
 
     public User() {
         setId(++idProducer);
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getSurname() {
