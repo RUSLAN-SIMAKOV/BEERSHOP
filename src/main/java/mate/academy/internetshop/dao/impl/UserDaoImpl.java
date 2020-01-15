@@ -63,8 +63,8 @@ public class UserDaoImpl implements UserDao {
 
         if (user.isEmpty() || !user.get().getPassword().equals(password)) {
             throw new AuthenticationException("Try again");
-        } else {
-            return user.get();
         }
+        return user.get();
+
     }
 }

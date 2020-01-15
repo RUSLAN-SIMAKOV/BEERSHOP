@@ -25,7 +25,6 @@ public class ShowBucketController extends HttpServlet {
         List<Item> items = bucketService.getAllItems(bucket);
 
         req.setAttribute("items", items);
-        req.setAttribute("bucket", bucket);
 
         req.getRequestDispatcher("/WEB-INF/views/bucket.jsp").forward(req, resp);
     }
