@@ -16,9 +16,11 @@ public class User {
     private String password;
     private String token;
     private Set<Role> roles = new HashSet<>();
+    Role role = new Role();
 
     public User() {
         setId(++idProducer);
+        roles.add(role);
     }
 
     public String getToken() {

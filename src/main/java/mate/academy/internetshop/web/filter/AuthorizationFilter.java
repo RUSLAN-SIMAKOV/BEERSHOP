@@ -25,6 +25,7 @@ import mate.academy.internetshop.service.UserService;
 public class AuthorizationFilter implements Filter {
 
     public static final String EMPTY_STRING = "";
+
     @Inject
     private static UserService userService;
 
@@ -68,24 +69,21 @@ public class AuthorizationFilter implements Filter {
         for (Cookie cookie : cookies) {
             if ("BEERSHOP".equals(cookie.getName())) {
                 token = cookie.getValue();
-
-                //пришли куки 2 штуки, всегда беру первые
             }
         }
 
         if (token == null) {
             processUnauthenticated(req, resp);
-        } else {
-            Optional<User> user = userService.getByToken(token);
-            if (user.isPresent()) {
-                if (verifyRole(user.get(), roleName)) {
-                    processAuthenticated(chain, req, resp);
-                    return;
-                } else {
-                    processDenied(req, resp);
-                    return;
-                }
+        }
+
+        Optional<User> user = userService.getByToken(token);
+        if (user.isPresent()) {
+            if (verifyRole(user.get(), roleName)) {
+                processAuthenticated(chain, req, resp);
+                return;
             }
+            processDenied(req, resp);
+            return;
         }
     }
 
@@ -96,12 +94,7 @@ public class AuthorizationFilter implements Filter {
 
     private boolean verifyRole(User user, Role.RoleName roleName) {
         Set<Role> role = user.getRole();
-        for (Role x : role) {
-            if (String.valueOf(x.getRoleName()).equals(String.valueOf(roleName))) {
-                return true;
-            }
-        }
-        return false;
+        return user.getRole().stream().anyMatch(r -> r.getRoleName().equals(roleName));
     }
 
     private void processAuthenticated(FilterChain chain,

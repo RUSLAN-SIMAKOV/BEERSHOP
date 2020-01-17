@@ -4,7 +4,7 @@ public class Role {
 
     private static Long idProducer = 0L;
     private Long id;
-    private RoleName roleName;
+    private RoleName roleName = RoleName.USER;
 
     public Role() {
         setId(++idProducer);
