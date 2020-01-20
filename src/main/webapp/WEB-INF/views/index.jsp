@@ -57,6 +57,9 @@
     <form action="${pageContext.request.contextPath}/login">
         <button>LOGIN</button>
     </form>
+    <form action="${pageContext.request.contextPath}/logout">
+        <button>LOGOUT</button>
+    </form>
     <form action="${pageContext.request.contextPath}/servlet/purchase">
         <button>START PURCHASING</button>
     </form>
@@ -77,6 +80,9 @@
     </form>
     <form action="${pageContext.request.contextPath}/servlet/getAllItems">
         <button>SHOW ALL ITEMS</button>
+    </form>
+    <form action="${pageContext.request.contextPath}/test">
+        <button>ADD TEST USERS</button>
     </form>
 
 </body>

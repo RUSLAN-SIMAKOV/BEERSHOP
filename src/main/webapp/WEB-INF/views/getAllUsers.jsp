@@ -25,7 +25,7 @@
         <th>Login</th>
         <th>Name</th>
         <th>Surname</th>
-        <th>Delete</th>
+        <th>Rolex</th>
     </tr>
     <c:forEach var="user" items="${users}">
         <tr>
