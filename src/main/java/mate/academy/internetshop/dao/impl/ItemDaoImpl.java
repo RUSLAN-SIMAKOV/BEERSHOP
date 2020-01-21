@@ -37,9 +37,4 @@ public class ItemDaoImpl implements ItemDao {
                 .findFirst()
                 .get());
     }
-
-    @Override
-    public void delete(Item item) {
-        Storage.items.remove(item);
-    }
 }

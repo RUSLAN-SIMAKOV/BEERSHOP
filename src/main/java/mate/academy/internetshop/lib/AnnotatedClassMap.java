@@ -14,7 +14,7 @@ import mate.academy.internetshop.service.UserService;
 
 public class AnnotatedClassMap {
 
-    private static final Map<Class, Object> classMap = new HashMap<>();
+    protected static final Map<Class, Object> classMap = new HashMap<>();
 
     static  {
 

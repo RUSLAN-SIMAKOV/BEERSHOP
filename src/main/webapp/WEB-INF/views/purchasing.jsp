@@ -2,13 +2,6 @@
 
 <jsp:useBean id="items" scope="request" type="java.util.List<mate.academy.internetshop.model.Item>"/>
 
-<%--
-  Created by IntelliJ IDEA.
-  User: OLESIA
-  Date: 09.01.2020
-  Time: 23:06
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
