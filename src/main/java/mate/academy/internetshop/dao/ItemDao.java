@@ -12,6 +12,4 @@ public interface ItemDao {
     Item update(Item item);
 
     void delete(Long id);
-
-    void delete(Item item);
 }

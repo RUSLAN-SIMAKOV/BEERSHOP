@@ -1,14 +1,10 @@
 package mate.academy.internetshop.model;
 
 public class Item {
-    private static Long idProducer = 0L;
+
     private String name;
     private Integer price;
     private Long id;
-
-    public Item() {
-        setId(++idProducer);
-    }
 
     public Integer getPrice() {
         return price;

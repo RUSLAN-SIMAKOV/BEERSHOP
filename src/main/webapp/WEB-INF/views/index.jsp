@@ -1,16 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<!-- saved from url=(0043)file:///C:/Users/OLESIA/Downloads/BEER.html -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title> Beer Market</title>
     <style>
         body {
-            background: rgb(47, 71, 70); /* Цвет фона */
-            color: #fc0; /* Цвет текста */
+            background: rgb(47, 71, 70);
+            color: #fc0;
         }
         h1 {
             font-family: 'Times New Roman', Times, serif;
-            font-size: 250%; /* Размер шрифта в процентах */
+            font-size: 250%;
             color:rgb(173, 117, 196);
             text-align:center;
         }
