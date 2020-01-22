@@ -24,8 +24,8 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
     @Override
     public Item create(Item item) {
         Statement statement = null;
-        String query = "INSERT INTO " + DB_NAME + ".items (name, price) VALUES (\""
-                + item.getName() + "\", " + item.getPrice() + ");";
+        String query = String.format("INSERT INTO %s.items (name, price) VALUES ('%s', %d);",
+                DB_NAME, item.getName(), item.getPrice());
         try {
             statement = connection.createStatement();
             statement.executeUpdate(query);
@@ -46,7 +46,8 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
     @Override
     public Optional<Item> get(Long id) {
         Statement statement = null;
-        String query = "SELECT * FROM " + DB_NAME + ".items where id=" + id + ";";
+        String query = String.format("SELECT * FROM %s.items where id=%d;",
+                DB_NAME, id);
         try {
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -79,8 +80,8 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
     @Override
     public Item update(Item item) {
         Statement statement = null;
-        String query = "UPDATE " + DB_NAME + ".items SET (name=\"" + item.getName()
-                + "\", price=" + item.getPrice() + ") WHERE id=" + item.getId() + ";";
+        String query = String.format("UPDATE %s.items SET (name='%s', price=%d) WHERE id=%d;",
+                DB_NAME, item.getName(), item.getPrice(), item.getId());
         try {
             statement = connection.createStatement();
             statement.executeUpdate(query);
@@ -101,7 +102,8 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
     @Override
     public void delete(Long id) {
         Statement statement = null;
-        String query = "DELETE FROM " + DB_NAME + ".items where id=" + id + ";";
+        String query = String.format("DELETE FROM %s.items where id=%d;",
+                DB_NAME, id);
         try {
             statement = connection.createStatement();
             statement.executeUpdate(query);
