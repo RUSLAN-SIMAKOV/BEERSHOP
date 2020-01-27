@@ -5,7 +5,7 @@ import mate.academy.internetshop.model.Bucket;
 
 public interface BucketDao {
 
-    Bucket create(Bucket bucket);
+    Bucket create(Bucket bucket, String token);
 
     Optional<Bucket> get(Long bucketId);
 

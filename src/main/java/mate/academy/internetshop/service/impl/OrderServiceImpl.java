@@ -18,8 +18,8 @@ public class OrderServiceImpl implements OrderService {
     private static OrderDao orderDao;
 
     @Override
-    public Order create(Order order) {
-        return orderDao.create(order);
+    public Order create(Order order, Long userId) {
+        return orderDao.create(order, userId);
     }
 
     @Override
@@ -45,9 +45,9 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order completeOrder(List<Item> items, User user) {
         Order order = new Order();
-        order.setUser(user);
+        order.setUserId(user.getId());
         order.setItems(items);
-        return orderDao.create(order);
+        return orderDao.create(order, user.getId());
     }
 
     @Override

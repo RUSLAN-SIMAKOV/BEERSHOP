@@ -10,7 +10,7 @@ import mate.academy.internetshop.model.Bucket;
 public class BucketDaoImpl implements BucketDao {
 
     @Override
-    public Bucket create(Bucket bucket) {
+    public Bucket create(Bucket bucket, String token) {
         Storage.buckets.add(bucket);
         return bucket;
     }

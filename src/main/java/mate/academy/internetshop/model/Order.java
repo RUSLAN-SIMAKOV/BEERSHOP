@@ -4,14 +4,9 @@ import java.util.List;
 
 public class Order {
 
-    private static Long idProducer = 0L;
     private List<Item> items;
-    private User user;
+    private Long userId;
     private Long id;
-
-    public Order() {
-        setId(++idProducer);
-    }
 
     public Long getId() {
         return id;
@@ -29,11 +24,12 @@ public class Order {
         this.items = items;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId
+    ) {
+        this.userId = userId;
     }
 }

@@ -7,7 +7,7 @@ import mate.academy.internetshop.model.User;
 
 public interface OrderService {
 
-    Order create(Order order);
+    Order create(Order order, Long userId);
 
     Order get(Long id);
 

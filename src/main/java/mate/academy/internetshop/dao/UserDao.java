@@ -1,5 +1,6 @@
 package mate.academy.internetshop.dao;
 
+import java.util.List;
 import java.util.Optional;
 import mate.academy.internetshop.model.User;
 
@@ -15,7 +16,7 @@ public interface UserDao {
 
     void delete(Long id);
 
-    void delete(User user);
-
     Optional<User> findByLogin(String login);
+
+    List<User> getAll();
 }

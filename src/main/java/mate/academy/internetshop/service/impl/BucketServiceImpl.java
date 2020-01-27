@@ -19,8 +19,8 @@ public class BucketServiceImpl implements BucketService {
     private static ItemDao itemDao;
 
     @Override
-    public Bucket create(Bucket bucket) {
-        return bucketDao.create(bucket);
+    public Bucket create(Bucket bucket, String token) {
+        return bucketDao.create(bucket, token);
     }
 
     @Override

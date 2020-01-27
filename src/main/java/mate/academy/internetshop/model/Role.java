@@ -2,13 +2,8 @@ package mate.academy.internetshop.model;
 
 public class Role {
 
-    private static Long idProducer = 0L;
     private Long id;
     private RoleName roleName = RoleName.USER;
-
-    public Role() {
-        setId(++idProducer);
-    }
 
     public Long getId() {
         return id;

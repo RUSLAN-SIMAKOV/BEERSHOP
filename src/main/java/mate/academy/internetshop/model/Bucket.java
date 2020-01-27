@@ -5,13 +5,11 @@ import java.util.List;
 
 public class Bucket {
 
-    private static Long idProducer = 0L;
     private List<Item> items;
     private Long userId;
     private Long id;
 
     public Bucket() {
-        setId(++idProducer);
         items = new ArrayList<>();
     }
 

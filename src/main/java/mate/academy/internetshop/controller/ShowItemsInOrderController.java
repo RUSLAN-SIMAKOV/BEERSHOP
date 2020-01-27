@@ -12,7 +12,6 @@ import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.model.Order;
 import mate.academy.internetshop.service.BucketService;
 import mate.academy.internetshop.service.OrderService;
-import mate.academy.internetshop.service.UserService;
 
 public class ShowItemsInOrderController extends HttpServlet {
 
@@ -22,9 +21,6 @@ public class ShowItemsInOrderController extends HttpServlet {
     @Inject
     private static OrderService orderService;
 
-    @Inject
-    private static UserService userService;
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -32,10 +28,10 @@ public class ShowItemsInOrderController extends HttpServlet {
         Order order = new Order();
         Long userId = (Long) req.getSession(true).getAttribute("userId");
         Bucket bucket = bucketService.getByUser(userId);
-        orderService.create(order);
+        orderService.create(order, userId);
         List<Item> items = bucketService.getAllItems(bucket);
         order.setItems(items);
-        order.setUser(userService.get(userId));
+        order.setUserId(userId);
         req.setAttribute("items", items);
         req.getRequestDispatcher("/WEB-INF/views/order.jsp").forward(req, resp);
     }

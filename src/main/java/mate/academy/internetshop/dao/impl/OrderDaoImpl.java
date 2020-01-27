@@ -11,7 +11,7 @@ import mate.academy.internetshop.model.Order;
 public class OrderDaoImpl implements OrderDao {
 
     @Override
-    public Order create(Order order) {
+    public Order create(Order order, Long userId) {
         Storage.orders.add(order);
         return order;
     }
@@ -25,7 +25,7 @@ public class OrderDaoImpl implements OrderDao {
     public Order update(Order order) {
         Order updatedOrder = get(order.getId())
                 .orElseThrow(() -> new NoSuchElementException("Can not find order for update"));
-        updatedOrder.setUser(order.getUser());
+        updatedOrder.setUserId(order.getUserId());
         updatedOrder.setItems(order.getItems());
         return updatedOrder;
     }

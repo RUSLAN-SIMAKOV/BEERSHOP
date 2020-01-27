@@ -6,7 +6,7 @@ import mate.academy.internetshop.model.Item;
 
 public interface BucketService {
 
-    Bucket create(Bucket bucket);
+    Bucket create(Bucket bucket, String token);
 
     Bucket get(Long id);
 

@@ -41,7 +41,7 @@
     </c:forEach>
 </table>
 <br>
-<form action="${pageContext.request.contextPath}/servlet/registration">
+<form action="${pageContext.request.contextPath}/registration">
     <button>ADD NEW USER</button>
 </form>
 <form action="${pageContext.request.contextPath}/index">
