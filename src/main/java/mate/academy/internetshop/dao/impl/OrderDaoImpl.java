@@ -11,7 +11,7 @@ import mate.academy.internetshop.model.Order;
 public class OrderDaoImpl implements OrderDao {
 
     @Override
-    public Order create(Order order, Long userId) {
+    public Order create(Order order) {
         Storage.orders.add(order);
         return order;
     }

@@ -9,21 +9,19 @@ import java.util.List;
 import java.util.Optional;
 import mate.academy.internetshop.dao.AbstractDao;
 import mate.academy.internetshop.dao.ItemDao;
+import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.lib.Dao;
 import mate.academy.internetshop.model.Item;
-import org.apache.log4j.Logger;
 
 @Dao
 public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
-
-    private static Logger logger = Logger.getLogger(ItemDaoJdbcImpl.class);
 
     public ItemDaoJdbcImpl(Connection connection) {
         super(connection);
     }
 
     @Override
-    public Item create(Item item) {
+    public Item create(Item item) throws DataProcessingException {
 
         String query = "INSERT INTO beershop.items (name, price) VALUES (?, ?);";
 
@@ -32,13 +30,13 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
             statement.setInt(2, item.getPrice());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error("Can not create item! ", e);
+            throw new DataProcessingException("Can not create item! ", e);
         }
         return item;
     }
 
     @Override
-    public Optional<Item> get(Long id) {
+    public Optional<Item> get(Long id) throws DataProcessingException {
 
         String query = "SELECT * FROM beershop.items where id=?;";
 
@@ -58,13 +56,13 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
                 return Optional.of(item);
             }
         } catch (SQLException e) {
-            logger.error("Can not get item with id " + id, e);
+            throw new DataProcessingException("Can not get item with id " + id, e);
         }
         return Optional.empty();
     }
 
     @Override
-    public Item update(Item item) {
+    public Item update(Item item) throws DataProcessingException {
 
         String query = "UPDATE beershop.items SET (name=?, price=?) WHERE id=?;";
 
@@ -74,13 +72,13 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
             statement.setLong(3, item.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error("Can not update item with id " + item.getId(), e);
+            throw new DataProcessingException("Can not update item with id " + item.getId(), e);
         }
         return item;
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id) throws DataProcessingException {
 
         String query = "DELETE FROM beershop.items where id=?;";
 
@@ -88,12 +86,12 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error("Can not delete item with id " + id, e);
+            throw new DataProcessingException("Can not delete item with id " + id, e);
         }
     }
 
     @Override
-    public List<Item> getAllItems() {
+    public List<Item> getAllItems() throws DataProcessingException {
         List<Item> items = new ArrayList<>();
         String query = "SELECT * FROM beershop.items;";
 
@@ -111,7 +109,7 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
                 items.add(item);
             }
         } catch (SQLException e) {
-            logger.error("Can not get all items!", e);
+            throw new DataProcessingException("Can not get all items!", e);
         }
         return items;
     }

@@ -15,11 +15,6 @@ public class User {
     private String password;
     private String token;
     private Set<Role> roles = new HashSet<>();
-    private Role role = new Role();
-
-    public User() {
-        roles.add(role);
-    }
 
     public String getToken() {
         return token;

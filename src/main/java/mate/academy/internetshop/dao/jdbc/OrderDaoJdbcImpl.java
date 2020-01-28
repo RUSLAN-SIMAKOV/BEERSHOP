@@ -10,17 +10,15 @@ import java.util.List;
 import java.util.Optional;
 import mate.academy.internetshop.dao.AbstractDao;
 import mate.academy.internetshop.dao.OrderDao;
+import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.lib.Dao;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.model.Order;
 import mate.academy.internetshop.service.ItemService;
-import org.apache.log4j.Logger;
 
 @Dao
 public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
-
-    private static Logger logger = Logger.getLogger(OrderDaoJdbcImpl.class);
 
     @Inject
     private static ItemService itemService;
@@ -30,13 +28,13 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
     }
 
     @Override
-    public Order create(Order order, Long userId) {
+    public Order create(Order order) throws DataProcessingException {
 
         String query = "INSERT INTO beershop.orders (id_user) "
                 + "VALUES (?);";
         try (PreparedStatement statement
                      = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setLong(1, userId);
+            statement.setLong(1, order.getUserId());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             while (resultSet.next()) {
@@ -44,13 +42,13 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
                 order.setId(bucketId);
             }
         } catch (SQLException e) {
-            logger.error("Can not create order! ", e);
+            throw new DataProcessingException("Can not create order! ", e);
         }
         return order;
     }
 
     @Override
-    public Optional<Order> get(Long id) {
+    public Optional<Order> get(Long id) throws DataProcessingException {
 
         Order order = new Order();
         List<Item> items = new ArrayList<>();
@@ -73,14 +71,14 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
             }
             order.setItems(items);
         } catch (SQLException e) {
-            logger.error("Can not get bucket! ", e);
+            throw new DataProcessingException("Can not get bucket! ", e);
         }
         return Optional.of(order);
 
     }
 
     @Override
-    public Order update(Order order) {
+    public Order update(Order order) throws DataProcessingException {
 
         Item updatedItem = null;
         String query = "INSERT INTO beershop.orders (id_order, id_item) "
@@ -95,13 +93,13 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
             statement.setLong(2, updatedItem.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error("Can not update order! ", e);
+            throw new DataProcessingException("Can not update order! ", e);
         }
         return order;
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id) throws DataProcessingException {
 
         String query = "DELETE FROM beershop.orders where id_order=?;";
 
@@ -109,7 +107,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error("Can not delete order with id " + id, e);
+            throw new DataProcessingException("Can not delete order with id " + id, e);
         }
         String queryDeleteUser = "DELETE FROM beershop.orders_items where id_order=?;";
 
@@ -117,28 +115,12 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error("Can not delete order with id " + id, e);
+            throw new DataProcessingException("Can not delete order with id " + id, e);
         }
     }
 
     @Override
-    public void delete(Order order) {
-
-        String query = "DELETE FROM beershop.orders where id_order=?;";
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setLong(1, order.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            logger.error("Can not delete order with id " + order.getId(), e);
-        }
-        String queryDeleteUser = "DELETE FROM beershop.orders_items where id_order=?;";
-
-        try (PreparedStatement statement = connection.prepareStatement(queryDeleteUser)) {
-            statement.setLong(1, order.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            logger.error("Can not delete order with id " + order.getId(), e);
-        }
+    public void delete(Order order) throws DataProcessingException {
+        delete(order.getId());
     }
 }

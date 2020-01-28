@@ -6,12 +6,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Bucket;
 import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.model.Order;
 import mate.academy.internetshop.service.BucketService;
 import mate.academy.internetshop.service.OrderService;
+import org.apache.log4j.Logger;
 
 public class ShowItemsInOrderController extends HttpServlet {
 
@@ -21,14 +23,22 @@ public class ShowItemsInOrderController extends HttpServlet {
     @Inject
     private static OrderService orderService;
 
+    private static Logger logger = Logger.getLogger(ShowItemsInOrderController.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
         Order order = new Order();
         Long userId = (Long) req.getSession(true).getAttribute("userId");
-        Bucket bucket = bucketService.getByUser(userId);
-        orderService.create(order, userId);
+        Bucket bucket = null;
+        try {
+            bucket = bucketService.getByUser(userId);
+            orderService.create(order);
+        } catch (DataProcessingException e) {
+            logger.error(e);
+            req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, resp);
+        }
         List<Item> items = bucketService.getAllItems(bucket);
         order.setItems(items);
         order.setUserId(userId);

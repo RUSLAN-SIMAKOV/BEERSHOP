@@ -7,9 +7,6 @@ CREATE TABLE `beershop`.`items` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);
 
-  INSERT INTO `beershop`.`items` (`id`, `name`, `price`) VALUES ('1', 'firstZ', '123');
-  INSERT INTO items (name, price) VALUES ("second", 100);
-
   CREATE TABLE `beershop`.`orders` (
   `id_order` INT NOT NULL AUTO_INCREMENT,
   `id_user` INT NOT NULL,
@@ -46,8 +43,9 @@ CREATE TABLE `beershop`.`roles` (
   `id_role` INT NOT NULL,
   `role-name` VARCHAR(45) NULL,
   PRIMARY KEY (`id_role`));
+
 CREATE TABLE `beershop`.`users_roles` (
-  `id_users_roles` INT NOT NULL,
+  `id_users_roles` INT NOT NULL AUTO_INCREMENT,
   `id_user` INT NULL,
   `id_role` INT NULL,
   PRIMARY KEY (`id_users_roles`),
@@ -59,13 +57,19 @@ CREATE TABLE `beershop`.`users_roles` (
     ON UPDATE NO ACTION);
 
 CREATE TABLE `beershop`.`buckets` (
-  `id_buckets` INT NOT NULL,
+  `id_buckets` INT NOT NULL AUTO_INCREMENT,
   `id_user` INT NULL,
   PRIMARY KEY (`id_buckets`));
 
 CREATE TABLE `beershop`.`item_bucket` (
-  `id_item_bucket` INT NOT NULL,
+  `id_item_bucket` INT NOT NULL AUTO_INCREMENT,
   `id_bucket` INT NULL,
   `id_item` INT NULL,
   PRIMARY KEY (`id_item_bucket`));
+
+INSERT INTO `beershop`.`roles` (`id_role`, `role-name`) VALUES ('1', 'USER');
+INSERT INTO `beershop`.`roles` (`id_role`, `role-name`) VALUES ('2', 'ADMIN');
+INSERT INTO `beershop`.`users_roles` (`id_user`, `id_role`) VALUES ('1', '1');
+INSERT INTO `beershop`.`users_roles` (`id_user`, `id_role`) VALUES ('1', '2');
+INSERT INTO `beershop`.`users_roles` (`id_user`, `id_role`) VALUES ('2', '1');
 

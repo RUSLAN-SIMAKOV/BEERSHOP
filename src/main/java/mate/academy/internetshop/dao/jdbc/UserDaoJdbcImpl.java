@@ -10,22 +10,20 @@ import java.util.List;
 import java.util.Optional;
 import mate.academy.internetshop.dao.AbstractDao;
 import mate.academy.internetshop.dao.UserDao;
+import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.lib.Dao;
 import mate.academy.internetshop.model.Role;
 import mate.academy.internetshop.model.User;
-import org.apache.log4j.Logger;
 
 @Dao
 public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
-
-    private static Logger logger = Logger.getLogger(UserDaoJdbcImpl.class);
 
     public UserDaoJdbcImpl(Connection connection) {
         super(connection);
     }
 
     @Override
-    public User create(User user) {
+    public User create(User user) throws DataProcessingException {
 
         String query = "INSERT INTO beershop.users (name, surname, login, password, token) "
                 + "VALUES (?, ?, ?, ?, ?);";
@@ -43,89 +41,76 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                 user.setId(userId);
             }
         } catch (SQLException e) {
-            logger.error("Can not create user! ", e);
+            throw new DataProcessingException("Can not create user! ", e);
+        }
+        return user;
+    }
+
+    private User dataBaseUserExtractor(ResultSet resultSet) throws SQLException {
+
+        User user = null;
+
+        while (resultSet.next()) {
+            if (user == null) {
+                user = new User();
+                long userId = resultSet.getLong("id_user");
+                user.setId(userId);
+                String name = resultSet.getString("name");
+                user.setName(name);
+                String surname = resultSet.getString("surname");
+                user.setSurname(surname);
+                String login = resultSet.getString("login");
+                user.setLogin(login);
+                String password = resultSet.getString("password");
+                user.setPassword(password);
+                String token = resultSet.getString("token");
+                user.setToken(token);
+            }
+            user.addRole(Role.of(resultSet.getString("role-name")));
         }
         return user;
     }
 
     @Override
-    public Optional<User> get(Long id) {
+    public Optional<User> get(Long id) throws DataProcessingException {
 
-        User user = new User();
         String query = "SELECT * FROM beershop.users "
-                + "INNER JOIN beershop.roles ON users.id_user = roles.id_user where id=?;";
+                + "JOIN beershop.users_roles ON users.id_user = users_roles.id_user "
+                + "JOIN beershop.roles ON users_roles.id_role = roles.id_role "
+                + "WHERE users.id_user=?;";
 
         try (PreparedStatement statement
                      = connection.prepareStatement(query)) {
             statement.setLong(1, id);
             statement.executeQuery();
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                long userId = resultSet.getLong("id_user");
-                String name = resultSet.getString("name");
-                String surname = resultSet.getString("surname");
-                String login = resultSet.getString("login");
-                String password = resultSet.getString("password");
-                String token = resultSet.getString("token");
-                String roleAdmin = resultSet.getString("role_second");
-                user.setId(userId);
-                user.setName(name);
-                user.setSurname(surname);
-                user.setLogin(login);
-                user.setPassword(password);
-                user.setToken(token);
-                if ("ADMIN".equals(roleAdmin)) {
-                    Role roleAd = new Role();
-                    roleAd.setRoleName(Role.RoleName.ADMIN);
-                    user.addRole(roleAd);
-                }
-            }
+            return Optional.of(dataBaseUserExtractor(resultSet));
         } catch (SQLException e) {
-            logger.error("Can not get user! ", e);
+            throw new DataProcessingException("Can not get user! ", e);
         }
-        return Optional.of(user);
     }
 
     @Override
-    public Optional<User> getByToken(String token) {
+    public Optional<User> getByToken(String token) throws DataProcessingException {
 
-        User user = new User();
         String query = "SELECT * FROM beershop.users "
-                + "LEFT JOIN beershop.users_roles ON users.id_user = users_roles.id_user where token=?;";
+                + "JOIN beershop.users_roles ON users.id_user = users_roles.id_user "
+                + "JOIN beershop.roles ON users_roles.id_role = roles.id_role "
+                + "WHERE users.token=?;";
 
         try (PreparedStatement statement
                      = connection.prepareStatement(query)) {
             statement.setString(1, token);
             statement.executeQuery();
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                long userId = resultSet.getLong("id_user");
-                String name = resultSet.getString("name");
-                String surname = resultSet.getString("surname");
-                String login = resultSet.getString("login");
-                String password = resultSet.getString("password");
-                token = resultSet.getString("token");
-                String roleAdmin = resultSet.getString("role_second");
-                user.setId(userId);
-                user.setName(name);
-                user.setSurname(surname);
-                user.setLogin(login);
-                user.setPassword(password);
-                user.setToken(token);
-                if ("ADMIN".equals(roleAdmin)) {
-                    Role roleAd = new Role();
-                    roleAd.setRoleName(Role.RoleName.ADMIN);
-                    user.addRole(roleAd);
-                }
-            }
+            return Optional.ofNullable(dataBaseUserExtractor(resultSet));
         } catch (SQLException e) {
-            logger.error("Can not get user! ", e);
+            throw new DataProcessingException("Can not get user! ", e);
         }
-        return Optional.of(user);
     }
 
     @Override
-    public User update(User user) {
+    public User update(User user) throws DataProcessingException {
 
         String query = "UPDATE beershop.users "
                 + "SET (name=?, surname=?, login=?, password+?, token=?) WHERE id=?;";
@@ -139,21 +124,21 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             statement.setLong(6, user.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error("Can not update item with id " + user.getId(), e);
+            throw new DataProcessingException("Can not update item with id " + user.getId(), e);
         }
         return user;
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id) throws DataProcessingException {
 
-        String query = "DELETE FROM beershop.roles where id_user=?;";
+        String query = "DELETE FROM beershop.users_roles where id_user=?;";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error("Can not delete user with id " + id, e);
+            throw new DataProcessingException("Can not delete user with id " + id, e);
         }
         String queryDeleteUser = "DELETE FROM beershop.users where id_user=?;";
 
@@ -161,50 +146,31 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error("Can not delete user with id " + id, e);
+            throw new DataProcessingException("Can not delete user with id " + id, e);
         }
     }
 
     @Override
-    public Optional<User> findByLogin(String login) {
+    public Optional<User> findByLogin(String login) throws DataProcessingException {
 
-        User user = new User();
         String query = "SELECT * FROM beershop.users "
-                + "LEFT JOIN beershop.users_roles ON users.id_user = users_roles.id_user where login=?;";
+                + "JOIN beershop.users_roles ON users.id_user = users_roles.id_user "
+                + "JOIN beershop.roles ON users_roles.id_role = roles.id_role "
+                + "WHERE users.login=?;";
 
         try (PreparedStatement statement
                      = connection.prepareStatement(query)) {
             statement.setString(1, login);
             statement.executeQuery();
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                long userId = resultSet.getLong("id_user");
-                String name = resultSet.getString("name");
-                String surname = resultSet.getString("surname");
-                login = resultSet.getString("login");
-                String password = resultSet.getString("password");
-                String token = resultSet.getString("token");
-                String roleAdmin = resultSet.getString("role_second");
-                user.setId(userId);
-                user.setName(name);
-                user.setSurname(surname);
-                user.setLogin(login);
-                user.setPassword(password);
-                user.setToken(token);
-                if ("ADMIN".equals(roleAdmin)) {
-                    Role roleAd = new Role();
-                    roleAd.setRoleName(Role.RoleName.ADMIN);
-                    user.addRole(roleAd);
-                }
-            }
+            return Optional.of(dataBaseUserExtractor(resultSet));
         } catch (SQLException e) {
-            logger.error("Can not get user! ", e);
+            throw new DataProcessingException("Can not get user! ", e);
         }
-        return Optional.of(user);
     }
 
     @Override
-    public List<User> getAll() {
+    public List<User> getAll() throws DataProcessingException {
 
         List<User> users = new ArrayList<>();
         String query = "SELECT * FROM beershop.users;";
@@ -229,7 +195,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                 users.add(user);
             }
         } catch (SQLException e) {
-            logger.error("Can not get all users!", e);
+            throw new DataProcessingException("Can not get all users!", e);
         }
         return users;
     }

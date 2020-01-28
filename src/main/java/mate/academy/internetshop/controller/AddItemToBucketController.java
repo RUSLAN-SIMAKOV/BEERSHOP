@@ -6,19 +6,23 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Bucket;
 import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.service.BucketService;
-import mate.academy.internetshop.service.ItemService;
+import mate.academy.internetshop.service.UserService;
+import org.apache.log4j.Logger;
 
 public class AddItemToBucketController extends HttpServlet {
+
+    private static Logger logger = Logger.getLogger(AddItemToBucketController.class);
 
     @Inject
     private static BucketService bucketService;
 
     @Inject
-    private static ItemService itemService;
+    private static UserService userService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -27,13 +31,22 @@ public class AddItemToBucketController extends HttpServlet {
         String itemId = req.getParameter("item_id");
 
         Long userId = (Long) req.getSession(true).getAttribute("userId");
-        Bucket bucket = bucketService.getByUser(userId);
-        bucketService.addItem(bucket.getId(), Long.valueOf(itemId));
+
+        Bucket bucket = null;
+        try {
+            bucket = bucketService.getByUser(userId);
+            if (bucket.getId() == null) {
+                bucket.setUserId(userId);
+                bucketService.create(bucket);
+            }
+            bucketService.addItem(bucket, Long.valueOf(itemId));
+        } catch (DataProcessingException e) {
+            logger.error(e);
+            req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, resp);
+        }
 
         List<Item> items = bucketService.getAllItems(bucket);
-
         req.setAttribute("items", items);
-
         req.getRequestDispatcher("/WEB-INF/views/bucket.jsp").forward(req, resp);
     }
 }

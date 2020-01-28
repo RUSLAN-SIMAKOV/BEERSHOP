@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import mate.academy.internetshop.exception.AuthenticationException;
+import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
@@ -37,7 +38,7 @@ public class LoginController extends HttpServlet {
             Cookie cookie = new Cookie("BEERSHOP", user.getToken());
             resp.addCookie(cookie);
             req.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
-        } catch (AuthenticationException e) {
+        } catch (AuthenticationException | DataProcessingException e) {
             req.setAttribute("error", "Incorrect login or password");
             req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
         }

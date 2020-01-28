@@ -2,7 +2,7 @@ package mate.academy.internetshop.service.impl;
 
 import java.util.List;
 import mate.academy.internetshop.dao.ItemDao;
-import mate.academy.internetshop.db.Storage;
+import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.lib.Service;
 import mate.academy.internetshop.model.Item;
@@ -15,27 +15,27 @@ public class ItemServiceImpl implements ItemService {
     private static ItemDao itemDao;
 
     @Override
-    public Item create(Item item) {
+    public Item create(Item item) throws DataProcessingException {
         return itemDao.create(item);
     }
 
     @Override
-    public Item get(Long id) {
+    public Item get(Long id) throws DataProcessingException {
         return itemDao.get(id).get();
     }
 
     @Override
-    public Item update(Item item) {
+    public Item update(Item item) throws DataProcessingException {
         return itemDao.update(item);
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id) throws DataProcessingException {
         itemDao.delete(id);
     }
 
     @Override
-    public List getAllItems() {
+    public List getAllItems() throws DataProcessingException {
         return itemDao.getAllItems();
     }
 
