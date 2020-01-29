@@ -90,18 +90,22 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
         return bucketExtractor(userId, query);
     }
 
+    private void deleteOldBucket(Long bucketId) throws DataProcessingException {
+        String queryDeleteBucket = "DELETE FROM beershop.item_bucket where id_bucket=?;";
+
+        try (PreparedStatement statement = connection.prepareStatement(queryDeleteBucket)) {
+            statement.setLong(1, bucketId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DataProcessingException("Can not update(delete) bucket with id "
+                    + bucketId, e);
+        }
+    }
+
     @Override
     public Bucket update(Bucket bucket) throws DataProcessingException {
 
-            String queryDeleteBucket = "DELETE FROM beershop.item_bucket where id_bucket=?;";
-
-            try (PreparedStatement statement = connection.prepareStatement(queryDeleteBucket)) {
-                statement.setLong(1, bucket.getId());
-                statement.executeUpdate();
-            } catch (SQLException e) {
-                throw new DataProcessingException("Can not update(delete) bucket with id "
-                        + bucket.getId(), e);
-            }
+        deleteOldBucket(bucket.getId());
 
         for (Item item : bucket.getItems()) {
             String query = "INSERT INTO beershop.item_bucket (id_bucket, id_item) "
@@ -122,14 +126,8 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
     @Override
     public void delete(Long id) throws DataProcessingException {
 
-        String query = "DELETE FROM beershop.item_bucket where id_bucket=?;";
+        deleteOldBucket(id);
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setLong(1, id);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DataProcessingException("Can not delete bucket with id " + id, e);
-        }
         String queryDeleteBucket = "DELETE FROM beershop.buckets where id_buckets=?;";
 
         try (PreparedStatement statement = connection.prepareStatement(queryDeleteBucket)) {

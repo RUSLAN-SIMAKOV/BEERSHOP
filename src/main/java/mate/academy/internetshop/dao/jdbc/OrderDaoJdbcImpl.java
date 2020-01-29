@@ -80,15 +80,8 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
     @Override
     public Order update(Order order) throws DataProcessingException {
 
-        String queryDeleteBucket = "DELETE FROM beershop.orders_items_bucket where id_order=?;";
+        deleteOldOrder(order.getId());
 
-        try (PreparedStatement statement = connection.prepareStatement(queryDeleteBucket)) {
-            statement.setLong(1, order.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DataProcessingException("Can not update(delete) bucket with id "
-                    + order.getId(), e);
-        }
         for (Item item : order.getItems()) {
             String query = "INSERT INTO beershop.orders (id_order, id_item) "
                     + "VALUES (?, ?);";
@@ -105,20 +98,26 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
         return order;
     }
 
-    @Override
-    public void delete(Long id) throws DataProcessingException {
+    public void deleteOldOrder(Long id) throws DataProcessingException {
 
-        String query = "DELETE FROM beershop.orders where id_order=?;";
+        String queryDeleteUser = "DELETE FROM beershop.orders_items where id_order=?;";
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(queryDeleteUser)) {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DataProcessingException("Can not delete order with id " + id, e);
         }
-        String queryDeleteUser = "DELETE FROM beershop.orders_items where id_order=?;";
+    }
 
-        try (PreparedStatement statement = connection.prepareStatement(queryDeleteUser)) {
+    @Override
+    public void delete(Long id) throws DataProcessingException {
+
+        deleteOldOrder(id);
+
+        String query = "DELETE FROM beershop.orders where id_order=?;";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
