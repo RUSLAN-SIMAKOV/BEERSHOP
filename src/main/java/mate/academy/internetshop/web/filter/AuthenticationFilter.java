@@ -11,6 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
@@ -24,7 +25,7 @@ public class AuthenticationFilter implements Filter {
     private static UserService userService;
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
 
     }
 
@@ -40,7 +41,12 @@ public class AuthenticationFilter implements Filter {
         }
         for (Cookie cookie : req.getCookies()) {
             if ("BEERSHOP".equals(cookie.getName())) {
-                Optional<User> user = userService.getByToken(cookie.getValue());
+                Optional<User> user = null;
+                try {
+                    user = userService.getByToken(cookie.getValue());
+                } catch (DataProcessingException e) {
+                    logger.error(e);
+                }
                 if (user.isPresent()) {
                     logger.info("User " + user.get().getLogin() + "authenticated");
                     filterChain.doFilter(servletRequest, servletResponse);

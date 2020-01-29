@@ -3,26 +3,26 @@ package mate.academy.internetshop.service;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.internetshop.exception.AuthenticationException;
+import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.model.User;
 
 public interface UserService {
 
-    User create(User user);
+    User create(User user) throws DataProcessingException;
 
     String getToken();
 
-    List<User> getAll();
+    List<User> getAll() throws DataProcessingException;
 
-    User get(Long id);
+    User get(Long id) throws DataProcessingException;
 
-    Optional<User> getByToken(String token);
+    Optional<User> getByToken(String token) throws DataProcessingException;
 
-    User update(User user);
+    User update(User user) throws DataProcessingException;
 
-    void delete(Long id);
+    void delete(Long id) throws DataProcessingException;
 
-    void delete(User user);
-
-    User login(String login, String password) throws AuthenticationException;
+    User login(String login, String password)
+            throws AuthenticationException, DataProcessingException;
 
 }

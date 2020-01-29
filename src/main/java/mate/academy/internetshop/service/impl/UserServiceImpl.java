@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import mate.academy.internetshop.dao.UserDao;
-import mate.academy.internetshop.db.Storage;
 import mate.academy.internetshop.exception.AuthenticationException;
+import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.lib.Service;
 import mate.academy.internetshop.model.User;
@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
     private static UserDao userDao;
 
     @Override
-    public User create(User user) {
+    public User create(User user) throws DataProcessingException {
         user.setToken(getToken());
         return userDao.create(user);
     }
@@ -29,37 +29,33 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAll() {
-        return Storage.users;
+    public List<User> getAll() throws DataProcessingException {
+        return userDao.getAll();
     }
 
     @Override
-    public User get(Long id) {
+    public User get(Long id) throws DataProcessingException {
         return userDao.get(id).get();
     }
 
     @Override
-    public Optional<User> getByToken(String token) {
+    public Optional<User> getByToken(String token) throws DataProcessingException {
         return userDao.getByToken(token);
     }
 
     @Override
-    public User update(User user) {
+    public User update(User user) throws DataProcessingException {
         return userDao.update(user);
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id) throws DataProcessingException {
         userDao.delete(id);
     }
 
     @Override
-    public void delete(User user) {
-        userDao.delete(user);
-    }
-
-    @Override
-    public User login(String login, String password) throws AuthenticationException {
+    public User login(String login, String password)
+            throws AuthenticationException, DataProcessingException {
 
         Optional<User> user = userDao.findByLogin(login);
 

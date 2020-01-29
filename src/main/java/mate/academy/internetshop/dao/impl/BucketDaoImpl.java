@@ -3,8 +3,10 @@ package mate.academy.internetshop.dao.impl;
 import java.util.Optional;
 import mate.academy.internetshop.dao.BucketDao;
 import mate.academy.internetshop.db.Storage;
+import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.lib.Dao;
 import mate.academy.internetshop.model.Bucket;
+import mate.academy.internetshop.model.Item;
 
 @Dao
 public class BucketDaoImpl implements BucketDao {
@@ -47,5 +49,10 @@ public class BucketDaoImpl implements BucketDao {
     @Override
     public void delete(Bucket bucket) {
         Storage.buckets.remove(bucket);
+    }
+
+    @Override
+    public void delete(Bucket bucket, Item item) throws DataProcessingException {
+
     }
 }

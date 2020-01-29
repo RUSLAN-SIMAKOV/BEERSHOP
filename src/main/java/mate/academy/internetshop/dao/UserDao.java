@@ -1,21 +1,23 @@
 package mate.academy.internetshop.dao;
 
+import java.util.List;
 import java.util.Optional;
+import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.model.User;
 
 public interface UserDao {
 
-    User create(User user);
+    User create(User user) throws DataProcessingException;
 
-    Optional<User> get(Long id);
+    Optional<User> get(Long id) throws DataProcessingException;
 
-    Optional<User> getByToken(String token);
+    Optional<User> getByToken(String token) throws DataProcessingException;
 
-    User update(User user);
+    User update(User user) throws DataProcessingException;
 
-    void delete(Long id);
+    void delete(Long id) throws DataProcessingException;
 
-    void delete(User user);
+    Optional<User> findByLogin(String login) throws DataProcessingException;
 
-    Optional<User> findByLogin(String login);
+    List<User> getAll() throws DataProcessingException;
 }

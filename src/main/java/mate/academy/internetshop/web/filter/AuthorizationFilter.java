@@ -17,10 +17,12 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Role;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
+import org.apache.log4j.Logger;
 
 public class AuthorizationFilter implements Filter {
 
@@ -28,6 +30,8 @@ public class AuthorizationFilter implements Filter {
 
     @Inject
     private static UserService userService;
+
+    private static Logger logger = Logger.getLogger(AuthorizationFilter.class);
 
     private Map<String, Role.RoleName> protectedUrls = new HashMap<>();
 
@@ -76,7 +80,13 @@ public class AuthorizationFilter implements Filter {
             processUnauthenticated(req, resp);
         }
 
-        Optional<User> user = userService.getByToken(token);
+        Optional<User> user = null;
+        try {
+            user = userService.getByToken(token);
+        } catch (DataProcessingException e) {
+            logger.error(e);
+            req.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(req, resp);
+        }
         if (user.isPresent()) {
             if (verifyRole(user.get(), roleName)) {
                 processAuthenticated(chain, req, resp);

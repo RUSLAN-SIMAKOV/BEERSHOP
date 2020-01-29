@@ -6,7 +6,6 @@ import java.util.Set;
 
 public class User {
 
-    private static Long idProducer = 0L;
     private String name;
     private String surname;
     private Bucket bucket;
@@ -16,12 +15,6 @@ public class User {
     private String password;
     private String token;
     private Set<Role> roles = new HashSet<>();
-    Role role = new Role();
-
-    public User() {
-        setId(++idProducer);
-        roles.add(role);
-    }
 
     public String getToken() {
         return token;
