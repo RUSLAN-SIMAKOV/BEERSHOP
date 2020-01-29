@@ -80,20 +80,27 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
     @Override
     public Order update(Order order) throws DataProcessingException {
 
-        Item updatedItem = null;
-        String query = "INSERT INTO beershop.orders (id_order, id_item) "
-                + "VALUES (?, ?);";
-        try (
-                PreparedStatement statement
-                        = connection.prepareStatement(query)) {
+        String queryDeleteBucket = "DELETE FROM beershop.orders_items_bucket where id_order=?;";
+
+        try (PreparedStatement statement = connection.prepareStatement(queryDeleteBucket)) {
             statement.setLong(1, order.getId());
-            for (Item item : order.getItems()) {
-                updatedItem = item;
-            }
-            statement.setLong(2, updatedItem.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DataProcessingException("Can not update order! ", e);
+            throw new DataProcessingException("Can not update(delete) bucket with id "
+                    + order.getId(), e);
+        }
+        for (Item item : order.getItems()) {
+            String query = "INSERT INTO beershop.orders (id_order, id_item) "
+                    + "VALUES (?, ?);";
+            try (
+                    PreparedStatement statement
+                            = connection.prepareStatement(query)) {
+                statement.setLong(1, order.getId());
+                statement.setLong(2, item.getId());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                throw new DataProcessingException("Can not update order! ", e);
+            }
         }
         return order;
     }

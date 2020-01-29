@@ -92,19 +92,29 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
 
     @Override
     public Bucket update(Bucket bucket) throws DataProcessingException {
-        Item updatedItem = null;
-        String query = "INSERT INTO beershop.item_bucket (id_bucket, id_item) "
-                + "VALUES (?, ?);";
-        try (PreparedStatement statement
-                     = connection.prepareStatement(query)) {
-            statement.setLong(1, bucket.getId());
-            for (Item item : bucket.getItems()) {
-                updatedItem = item;
+
+            String queryDeleteBucket = "DELETE FROM beershop.item_bucket where id_bucket=?;";
+
+            try (PreparedStatement statement = connection.prepareStatement(queryDeleteBucket)) {
+                statement.setLong(1, bucket.getId());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                throw new DataProcessingException("Can not update(delete) bucket with id "
+                        + bucket.getId(), e);
             }
-            statement.setLong(2, updatedItem.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DataProcessingException("Can not update item! ", e);
+
+        for (Item item : bucket.getItems()) {
+            String query = "INSERT INTO beershop.item_bucket (id_bucket, id_item) "
+                    + "VALUES (?, ?);";
+            try (PreparedStatement statement
+                         = connection.prepareStatement(query)) {
+                statement.setLong(1, bucket.getId());
+
+                statement.setLong(2, item.getId());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                throw new DataProcessingException("Can not update item! ", e);
+            }
         }
         return bucket;
     }

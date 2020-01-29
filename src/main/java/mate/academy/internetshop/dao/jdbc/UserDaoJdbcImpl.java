@@ -177,6 +177,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
+
             while (resultSet.next()) {
                 long userId = resultSet.getLong("id_user");
                 String name = resultSet.getString("name");
