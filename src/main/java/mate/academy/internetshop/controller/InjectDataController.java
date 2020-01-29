@@ -10,6 +10,7 @@ import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
+import mate.academy.internetshop.util.HashUtil;
 import org.apache.log4j.Logger;
 
 public class InjectDataController extends HttpServlet {
@@ -26,7 +27,8 @@ public class InjectDataController extends HttpServlet {
         user.setName("Ned");
         user.setSurname("Flanders");
         user.setLogin("red");
-        user.setPassword("2");
+        user.setSalt(HashUtil.getSalt());
+        user.setPassword(HashUtil.hashPassword("2", user.getSalt()));
         try {
             userService.create(user);
         } catch (DataProcessingException e) {
@@ -38,7 +40,9 @@ public class InjectDataController extends HttpServlet {
         admin.setName("Homer");
         admin.setSurname("Simpson");
         admin.setLogin("blue");
-        admin.setPassword("1");
+        admin.setSalt(HashUtil.getSalt());
+
+        admin.setPassword(HashUtil.hashPassword("1", admin.getSalt()));
         try {
             userService.create(admin);
         } catch (DataProcessingException e) {
