@@ -163,16 +163,6 @@
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
 
-    <!--servlet inject test Users-->
-    <servlet>
-        <servlet-name>injectTest</servlet-name>
-        <servlet-class>mate.academy.internetshop.controller.InjectDataController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>injectTest</servlet-name>
-        <url-pattern>/test</url-pattern>
-    </servlet-mapping>
-
     <!--listener injector-->
     <listener>
         <listener-class>mate.academy.internetshop.controller.InjectInitializer</listener-class>

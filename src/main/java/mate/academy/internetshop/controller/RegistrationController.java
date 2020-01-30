@@ -14,7 +14,6 @@ import mate.academy.internetshop.service.UserService;
 import org.apache.log4j.Logger;
 
 public class RegistrationController extends HttpServlet {
-
     @Inject
     private static UserService userService;
 

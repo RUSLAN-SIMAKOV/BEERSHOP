@@ -11,7 +11,6 @@ import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Bucket;
 import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.service.BucketService;
-import mate.academy.internetshop.service.UserService;
 import org.apache.log4j.Logger;
 
 public class AddItemToBucketController extends HttpServlet {
@@ -20,9 +19,6 @@ public class AddItemToBucketController extends HttpServlet {
 
     @Inject
     private static BucketService bucketService;
-
-    @Inject
-    private static UserService userService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

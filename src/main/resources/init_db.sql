@@ -36,6 +36,7 @@ CREATE TABLE `beershop`.`users` (
   `surname` VARCHAR(45) NULL,
   `login` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
+  `salt` BINARY(16) NULL;
   `token` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_user`));
 
