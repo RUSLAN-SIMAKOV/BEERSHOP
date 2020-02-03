@@ -59,6 +59,6 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> getAll() {
-        return null;
+        return Storage.users;
     }
 }

@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title> Beer Market</title>
+    <title>BEER❤SHOP</title>
     <style>
         body {
             background: rgb(47, 71, 70);
@@ -41,12 +41,6 @@
 <p>     По способу изготовления, а именно, по типу сбраживания, пиво подразделяется на два основных вида - Эль и Lager.
     К разновидностям Эля относятся такие сорта, как: ячменное (Barley Wine), пшеничное (Weizen Weisse), портер (Porter), стаут (Stout), белое (Weisse), горькое (Bitter) и ламбик (Lambic).
     Lager - это в основной своей массе светлые сорта пива, но встречается и темный лагер. Благодаря небольшому количеству добавляемого хмеля, это пиво имеет легкий, мягкий вкус. Lager включает в себя такие основные сорта, как: пилзнер (Pilsner), мартовское пиво (Maerzen), бок (Bock), сухое (Dry), подкопченное пиво (Rauch), ледяное (Ice Beer) и бочковое (Draught). </p>
-
-<h3> У нас вы можете купить </h3>
-<ul>
-    <li> Эль </li>
-    <li>  Lager </li>
-</ul>
 <p>
 </p>
 <div class="container"></div>
@@ -69,7 +63,7 @@
         <button>SHOW ORDER</button>
     </form>
     <hr>
-    <h2>DO NOT TOUCH!</h2>
+    <h2>ADMIN ONLY!</h2>
     <hr>
     <form action="${pageContext.request.contextPath}/servlet/getAllUsers">
         <button>SHOW ALL USERS</button>
@@ -80,9 +74,5 @@
     <form action="${pageContext.request.contextPath}/servlet/getAllItems">
         <button>SHOW ALL ITEMS</button>
     </form>
-    <form action="${pageContext.request.contextPath}/test">
-        <button>ADD TEST USERS</button>
-    </form>
-
 </body>
 </html>

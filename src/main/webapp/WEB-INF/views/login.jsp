@@ -2,7 +2,7 @@
 
 <html>
 <head>
-    <title>BEER SHOP</title>
+    <title>BEER❤SHOP</title>
 </head>
 <body>
 <form action="${pageContext.request.contextPath}/login" method="post">

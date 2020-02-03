@@ -53,6 +53,6 @@ public class BucketDaoImpl implements BucketDao {
 
     @Override
     public void delete(Bucket bucket, Item item) throws DataProcessingException {
-
+        bucket.getItems().remove(item);
     }
 }

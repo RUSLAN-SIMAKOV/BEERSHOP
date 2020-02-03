@@ -5,7 +5,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>All Items</title>
+    <title>BEER❤SHOP</title>
 </head>
 <body>
 

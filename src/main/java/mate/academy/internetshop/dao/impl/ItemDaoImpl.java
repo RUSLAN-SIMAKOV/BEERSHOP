@@ -41,6 +41,6 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public List getAllItems() {
-        return null;
+        return Storage.items;
     }
 }

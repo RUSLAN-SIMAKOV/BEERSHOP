@@ -3,7 +3,7 @@
 
 <html>
 <head>
-    <title>BEER SHOP * ITEM ADDING</title>
+    <title>BEER❤SHOP</title>
 </head>
 <body>
 <form action="${pageContext.request.contextPath}/servlet/itemAdding" method="post">
