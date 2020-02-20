@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>☣ACCESS DENIED☣</title>
+    <style type="text/css"><%@include file="../styles/beershop.css"%></style>
 </head>
 <body>
 <h1>ACCESS DENIED!</h1>

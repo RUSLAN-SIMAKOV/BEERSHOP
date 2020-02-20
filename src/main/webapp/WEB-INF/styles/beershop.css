@@ -1,0 +1,28 @@
+
+body {
+    background: #fff3cd;
+    color: indigo;
+}
+h1 {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 250%;
+    color:rgb(173, 117, 196);
+    text-align:center;
+}
+p, li {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 100%;
+}
+h2, h3 {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 120%;
+    text-align:center;
+    color:rgb(216, 79, 25);
+}
+
+footer {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 100%;
+    text-align:left;
+    color:rgb(45, 209, 238);
+}
