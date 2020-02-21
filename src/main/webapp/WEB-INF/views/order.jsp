@@ -1,41 +1,46 @@
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<jsp:useBean id="items" scope="request" type="java.util.List<mate.academy.internetshop.model.Item>"/>
+<jsp:useBean id="items" scope="request" type="java.util.List<beershop.model.Item>"/>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>BEER❤SHOP</title>
+    <style type="text/css">
+        <%@include file="../styles/beershop.css" %>
+    </style>
 </head>
 <body>
 
 <h1>ORDER!</h1>
 
-<table border="2">
-    <tr>
-        <th>ID</th>
-        <th>Item</th>
-        <th>Price</th>
-    </tr>
-    <c:forEach var="item" items="${items}">
+<div align="center">
+    <table border="2">
         <tr>
-            <td>
-                <c:out value="${item.id}" />
-            </td>
-            <td>
-                <c:out value="${item.name}" />
-            </td>
-            <td>
-                <c:out value="${item.price}" />
-            </td>
-
+            <th>ID</th>
+            <th>Item</th>
+            <th>Price</th>
         </tr>
-    </c:forEach>
-</table>
-<br>
+        <c:forEach var="item" items="${items}">
+            <tr>
+                <td>
+                    <c:out value="${item.id}"/>
+                </td>
+                <td>
+                    <c:out value="${item.name}"/>
+                </td>
+                <td>
+                    <c:out value="${item.price}"/>
+                </td>
 
-<form action="${pageContext.request.contextPath}/index">
-    <button>BACK HOME</button>
-</form>
+            </tr>
+        </c:forEach>
+    </table>
+    <br>
+
+    <form action="${pageContext.request.contextPath}/index" class="form-control">
+        <button>BACK HOME</button>
+    </form>
+</div>
 </body>
 </html>

@@ -1,4 +1,6 @@
-CREATE SCHEMA `beershop` DEFAULT CHARACTER SET utf8 ;
+DROP SCHEMA IF EXISTS beershop;
+CREATE SCHEMA beershop;
+USE beershop;
 
 CREATE TABLE `beershop`.`items` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -35,8 +37,8 @@ CREATE TABLE `beershop`.`users` (
   `name` VARCHAR(45) NULL,
   `surname` VARCHAR(45) NULL,
   `login` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
-  `salt` BINARY(16) NULL;
+  `password` VARCHAR(255) NOT NULL,
+  `salt` BINARY(16) NULL,
   `token` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_user`));
 
@@ -68,9 +70,22 @@ CREATE TABLE `beershop`.`item_bucket` (
   `id_item` INT NULL,
   PRIMARY KEY (`id_item_bucket`));
 
-INSERT INTO `beershop`.`roles` (`id_role`, `role-name`) VALUES ('1', 'USER');
-INSERT INTO `beershop`.`roles` (`id_role`, `role-name`) VALUES ('2', 'ADMIN');
+INSERT INTO `beershop`.`roles` (`id_role`, `role-name`) VALUES ('1', 'ADMIN');
+INSERT INTO `beershop`.`roles` (`id_role`, `role-name`) VALUES ('2', 'USER');
+INSERT INTO `beershop`.`roles` (`id_role`, `role-name`) VALUES ('3', 'USER');
+INSERT INTO `beershop`.`roles` (`id_role`, `role-name`) VALUES ('4', 'USER');
+INSERT INTO `beershop`.`roles` (`id_role`, `role-name`) VALUES ('5', 'USER');
+INSERT INTO `beershop`.`roles` (`id_role`, `role-name`) VALUES ('6', 'USER');
+INSERT INTO `beershop`.`roles` (`id_role`, `role-name`) VALUES ('7', 'USER');
+INSERT INTO `beershop`.`roles` (`id_role`, `role-name`) VALUES ('8', 'USER');
+INSERT INTO `beershop`.`roles` (`id_role`, `role-name`) VALUES ('9', 'USER');
 INSERT INTO `beershop`.`users_roles` (`id_user`, `id_role`) VALUES ('1', '1');
 INSERT INTO `beershop`.`users_roles` (`id_user`, `id_role`) VALUES ('1', '2');
 INSERT INTO `beershop`.`users_roles` (`id_user`, `id_role`) VALUES ('2', '1');
-
+INSERT INTO `beershop`.`users_roles` (`id_user`, `id_role`) VALUES ('3', '1');
+INSERT INTO `beershop`.`users_roles` (`id_user`, `id_role`) VALUES ('4', '1');
+INSERT INTO `beershop`.`users_roles` (`id_user`, `id_role`) VALUES ('5', '1');
+INSERT INTO `beershop`.`users_roles` (`id_user`, `id_role`) VALUES ('6', '1');
+INSERT INTO `beershop`.`users_roles` (`id_user`, `id_role`) VALUES ('7', '1');
+INSERT INTO `beershop`.`users_roles` (`id_user`, `id_role`) VALUES ('8', '1');
+INSERT INTO `beershop`.`users_roles` (`id_user`, `id_role`) VALUES ('9', '1');

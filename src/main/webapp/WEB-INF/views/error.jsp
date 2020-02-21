@@ -2,8 +2,9 @@
 <html>
 <head>
     <title>🚀ERROR🚀</title>
+    <style type="text/css"><%@include file="../styles/beershop.css"%></style>
 </head>
 <body>
-<h1>TRY TO RESTART YOUR COMPUTER TWICE</h1>
+<h1>🚀ERROR🚀</h1>
 </body>
 </html>

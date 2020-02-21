@@ -1,16 +1,18 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<jsp:useBean id="items" scope="request" type="java.util.List<mate.academy.internetshop.model.Item>"/>
+<jsp:useBean id="items" scope="request" type="java.util.List<beershop.model.Item>"/>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>BEER❤SHOP</title>
+    <style type="text/css"><%@include file="../styles/beershop.css"%></style>
 </head>
 <body>
 
 <h1>BUY EVERYTHING!</h1>
 
+<div align="center">
 <table border="2">
     <tr>
         <th>ID</th>
@@ -30,15 +32,16 @@
                 <c:out value="${item.price}" />
             </td>
             <td>
-                <a href="/internetshop2_war_exploded/servlet/bucket?item_id=${item.id}">ADD</a>
+                <a href="/beershop_war_exploded/servlet/bucket?item_id=${item.id}">ADD</a>
             </td>
         </tr>
     </c:forEach>
 </table>
 <br>
 </form>
-<form action="${pageContext.request.contextPath}/index">
+<form action="${pageContext.request.contextPath}/index" class="form-control">
     <button>BACK HOME</button>
 </form>
+</div>
 </body>
 </html>
